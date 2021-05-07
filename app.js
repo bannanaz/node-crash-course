@@ -1,13 +1,19 @@
 const express = require("express");
+//const morgan = require("morgan");
+const mongoose = require("mongoose");
 
 //express app
 const app = express();
 
-//register viiew engine
-app.set("view engine", "ejs");
+//connect to mongodb
+const dbURI = mongoose
+  .connect(dbURI, { useNewUrlParser: true, useUnifiedTopology: true })
+  .then((result) => app.listen(3000))
+  .catch((err) => console.log(err));
 
-// listen for requests
-app.listen(3000);
+//register viiew engine
+
+app.set("view engine", "ejs");
 
 app.get("/", (req, res) => {
   const blogs = [
