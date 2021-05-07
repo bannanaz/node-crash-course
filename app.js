@@ -7,9 +7,7 @@ const Blog = require("./models/blog");
 const app = express();
 
 //connect to mongodb
-const dbURI =
-  "mongodb+srv://test:Rw1VXWSGG4lT8urj@learn-node.6l8ii.mongodb.net/learn-node?retryWrites=true&w=majority";
-mongoose
+
   .connect(dbURI, { useNewUrlParser: true, useUnifiedTopology: true })
   .then((result) => app.listen(3000))
   .catch((err) => console.log(err));
@@ -92,6 +90,17 @@ app.post("/blogs", (req, res) => {
     .save()
     .then((result) => {
       res.redirect("/blogs");
+    })
+    .catch((err) => {
+      console.log(err);
+    });
+});
+
+app.get("/blogs/:id", (req, res) => {
+  const id = req.params.id;
+  Blog.findById(id)
+    .then((result) => {
+      res.render("details", { blog: result, title: "Blog Details" });
     })
     .catch((err) => {
       console.log(err);
